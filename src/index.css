@@ -5,44 +5,44 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 30 14% 17%;
+    --background: 0 0% 100%;           /* white */
+    --foreground: 0 0% 0%;             /* black */
 
     --card: 0 0% 100%;
-    --card-foreground: 30 14% 17%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 14% 17%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 30 30% 24%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 350 82% 58%;            /* Rosebank Red */
+    --primary-foreground: 0 0% 100%;   /* White */
 
-    --secondary: 39 33% 94%;
-    --secondary-foreground: 30 30% 24%;
+    --secondary: 0 0% 10%;             /* Black */
+    --secondary-foreground: 0 0% 100%; /* White */
 
-    --muted: 39 25% 90%;
-    --muted-foreground: 30 10% 40%;
+    --muted: 0 0% 94%;                 /* Light Gray/White */
+    --muted-foreground: 0 0% 32%;      /* Dark Gray */
 
-    --accent: 41 50% 60%;
-    --accent-foreground: 30 30% 15%;
+    --accent: 0 0% 0%;                 /* Black */
+    --accent-foreground: 0 0% 100%;    /* White */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 350 82% 58%;        /* Red again */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 15% 84%;
-    --input: 30 15% 84%;
-    --ring: 41 50% 60%;
+    --border: 0 0% 80%;                /* lightest gray for borders */
+    --input: 0 0% 80%;
+    --ring: 350 82% 58%;               /* Red */
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 41 50% 60%;
-    --sidebar-primary-foreground: 30 30% 15%;
-    --sidebar-accent: 0 0% 15%;
+    --sidebar-background: 0 0% 10%;    /* black */
+    --sidebar-foreground: 0 0% 100%;   /* white */
+    --sidebar-primary: 350 82% 58%;    /* Rosebank red */
+    --sidebar-primary-foreground: 0 0% 100%; 
+    --sidebar-accent: 0 0% 0%;         /* black */
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 41 50% 60%;
+    --sidebar-border: 0 0% 20%;        /* dark gray */
+    --sidebar-ring: 350 82% 58%;
   }
 
   * {
@@ -56,13 +56,13 @@
 }
 
 .lv-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23B99F65' fill-opacity='0.15' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  background: none; /* remove old pattern */
 }
 
 .gold-gradient {
-  background: linear-gradient(135deg, #D0C09F 0%, #B99F65 100%);
+  background: linear-gradient(135deg, #ea384c 0%, #000 100%);
 }
 
 .section-heading {
-  @apply text-2xl font-serif font-medium text-lv-brown border-b border-lv-gold/30 pb-2 mb-6;
+  @apply text-2xl font-serif font-medium text-black border-b border-rc-red/30 pb-2 mb-6;
 }

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -32,14 +32,11 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto bg-white border border-gray-100 shadow-md">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-serif text-lv-brown flex justify-center">
+        <CardTitle className="text-2xl font-serif text-rc-red flex justify-center">
           Welcome Back
         </CardTitle>
-        {/* <CardDescription>
-          Enter your credentials to access your account
-        </CardDescription> */}
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
@@ -51,7 +48,7 @@ export function LoginForm() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border-lv-brown"
+              className="border-black"
             />
           </div>
           <div className="space-y-2">
@@ -62,23 +59,23 @@ export function LoginForm() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border-lv-brown"
+              className="border-black"
             />
           </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="text-sm text-rc-red">{error}</p>}
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Button
             type="submit"
-            className="w-full bg-lv-gold hover:bg-lv-gold/90 text-black"
+            className="w-full bg-rc-red hover:bg-rc-red/90 text-white font-bold"
           >
             Sign In
           </Button>
-          <p className="text-sm text-center text-muted-foreground">
+          <p className="text-sm text-center text-gray-500">
             Don't have an account?{" "}
             <Button
               variant="link"
-              className="p-0 text-lv-brown hover:text-lv-brown/80"
+              className="p-0 text-rc-red hover:text-rc-red/80"
               onClick={() => navigate("/register")}
             >
               Sign up
