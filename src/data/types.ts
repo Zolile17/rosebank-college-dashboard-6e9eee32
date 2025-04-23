@@ -18,7 +18,7 @@ export interface RevenueDataPoint {
   revenue: number;
 }
 
-// Transaction types for different components
+// Updated: Added iieFaculty field
 export interface ReconciliationTransaction {
   id: string;
   studentReference: string;
@@ -27,13 +27,12 @@ export interface ReconciliationTransaction {
   email: string;
   campus: string;
   payerFirstName: string;
-  payerLastName: string;
-  paymentType: "Card" | "EFT" | "Ozow";
   amount: number;
   timestamp: string;
   status: "successful" | "failed" | "pending";
   rrn?: string;
   cardNumber?: string;
+  iieFaculty?: string;
 }
 
 export interface TransactionsTableTransaction {
@@ -53,6 +52,7 @@ export interface TransactionsTableTransaction {
   productName: string;
   customer: string;
   storeLocation: string;
+  iieFaculty?: string;
 }
 
 // Export activity type with campus location

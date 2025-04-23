@@ -7,13 +7,12 @@ export interface Transaction {
   email: string;
   campus: string;
   payerFirstName: string;
-  payerLastName: string;
-  paymentType: string;
   amount: number;
   timestamp: string;
   status: string;
   rrn?: string;
   cardNumber?: string;
+  iieFaculty?: string;
 }
 
 export interface ReconciliationTableProps {

@@ -1,5 +1,19 @@
+
 import { ReconciliationTransaction, TransactionsTableTransaction } from "./types";
 import { generateRRN, generateMaskedCard } from "./utils";
+
+// Add faculties
+const faculties = [
+  "Commerce",
+  "Finance & Accounting",
+  "Law",
+  "Education",
+  "Humanities and Social Science",
+  "Information and Communications Technology"
+];
+
+// Helper function to randomly assign a faculty
+const assignRandomFaculty = () => faculties[Math.floor(Math.random() * faculties.length)];
 
 // Helper function to hash student reference
 const hashStudentRef = (id: string): string => {
@@ -46,6 +60,7 @@ const getCustomerName = (firstName: string, lastName: string): string => {
 };
 
 // Sample student data with updated fields for campus payments
+// Add iieFaculty for each transaction (random assignment)
 export const transactionsData: ReconciliationTransaction[] = [
   {
     id: "T1001",
@@ -58,7 +73,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "successful",
     campus: "Cape Town",
     payerFirstName: "Thomas",
-    payerLastName: "Parker",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Card",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -74,7 +89,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "failed",
     campus: "Braamfontein",
     payerFirstName: "Robert",
-    payerLastName: "Johnson",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "EFT",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -90,7 +105,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "pending",
     campus: "Braamfontein",
     payerFirstName: "Thomas",
-    payerLastName: "Wright",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Ozow",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -106,7 +121,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "failed",
     campus: "Cape Town",
     payerFirstName: "Ming",
-    payerLastName: "Chen",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Card",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -122,7 +137,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "failed",
     campus: "Durban",
     payerFirstName: "Eric",
-    payerLastName: "Roberts",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "EFT",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -138,7 +153,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "successful",
     campus: "Cape Town",
     payerFirstName: "Alexandra",
-    payerLastName: "Smith",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Card",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -154,7 +169,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "failed",
     campus: "Braamfontein",
     payerFirstName: "Jackson",
-    payerLastName: "Brown",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Ozow",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -170,7 +185,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "pending",
     campus: "Cape Town",
     payerFirstName: "Carlos",
-    payerLastName: "Garcia",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "EFT",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -186,7 +201,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "successful",
     campus: "Pretoria",
     payerFirstName: "Naomi",
-    payerLastName: "Campbell",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Card",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -202,7 +217,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "failed",
     campus: "Polokwane",
     payerFirstName: "James",
-    payerLastName: "Wilson",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Ozow",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -218,7 +233,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "failed",
     campus: "Durban",
     payerFirstName: "Olivia",
-    payerLastName: "Chen",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "Card",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -234,7 +249,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     status: "successful",
     campus: "Braamfontein",
     payerFirstName: "John",
-    payerLastName: "Watson",
+    iieFaculty: assignRandomFaculty(),
     paymentType: "EFT",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
@@ -247,10 +262,13 @@ const convertToTableTransactions = (data: ReconciliationTransaction[]): Transact
     const customerName = getCustomerName(t.firstName, t.lastName);
     return {
       ...t,
+      payerLastName: "", // remain for old consumers
+      paymentType: t.paymentType || "",
       date: t.timestamp,
       productName: productNames[Math.floor(Math.random() * productNames.length)],
       customer: customerName,
-      storeLocation: t.campus
+      storeLocation: t.campus,
+      iieFaculty: t.iieFaculty
     };
   });
 };
