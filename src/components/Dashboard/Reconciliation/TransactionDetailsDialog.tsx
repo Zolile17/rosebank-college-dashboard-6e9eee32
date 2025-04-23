@@ -1,16 +1,20 @@
 
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogClose,
-} from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
 import { Transaction } from "./types";
 import { TransactionStatusBadge } from "./TransactionStatusBadge";
+
+interface DetailsRowProps {
+  label: string;
+  value: React.ReactNode;
+}
+
+const DetailsRow = ({ label, value }: DetailsRowProps) => (
+  <div className="grid grid-cols-2 gap-4 py-2 border-b border-border/30">
+    <div className="font-medium text-muted-foreground">{label}</div>
+    <div className="font-medium">{value}</div>
+  </div>
+);
 
 interface TransactionDetailsDialogProps {
   isOpen: boolean;
@@ -23,106 +27,47 @@ export function TransactionDetailsDialog({
   isOpen,
   transaction,
   formatCurrency,
-  onClose,
+  onClose
 }: TransactionDetailsDialogProps) {
-  if (!transaction) return null;
+  if (!transaction) {
+    return null;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
+          <DialogTitle className="flex items-center gap-2">
             Transaction Details
-            <DialogClose className="h-4 w-4 opacity-70" />
+            <TransactionStatusBadge status={transaction.status} />
           </DialogTitle>
           <DialogDescription>
-            {/* Complete information about transaction */}
+            Transaction ID: {transaction.id}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">ID:</div>
-            <div className="col-span-3">{transaction.id}</div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Product:</div>
-            <div className="col-span-3">
-              {transaction.productName}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Customer:</div>
-            <div className="col-span-3">{transaction.customer}</div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Date:</div>
-            <div className="col-span-3">{transaction.date}</div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Amount:</div>
-            <div className="col-span-3">
-              {formatCurrency(transaction.amount)}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Status:</div>
-            <div className="col-span-3">
-              <TransactionStatusBadge status={transaction.status} />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Store:</div>
-            <div className="col-span-3">
-              {transaction.storeLocation}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">RRN:</div>
-            <div className="col-span-3">
-              {transaction.rrn || "N/A"}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Card Number:</div>
-            <div className="col-span-3">
-              {transaction.cardNumber || "N/A"}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Served By:</div>
-            <div className="col-span-3">
-              {transaction.servedBy || "N/A"}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Payment Method:</div>
-            <div className="col-span-3">
-              {transaction.paymentMethod || "Credit Card"}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <div className="font-semibold text-left">Notes:</div>
-            <div className="col-span-3">
-              {transaction.notes || "No additional notes"}
-            </div>
-          </div>
+        <div className="space-y-1">
+          <DetailsRow label="Student Reference" value={transaction.studentReference} />
+          <DetailsRow label="First Name" value={transaction.firstName} />
+          <DetailsRow label="Last Name" value={transaction.lastName} />
+          <DetailsRow label="Email" value={transaction.email} />
+          <DetailsRow label="Campus" value={transaction.campus} />
+          <DetailsRow label="Payer First Name" value={transaction.payerFirstName} />
+          <DetailsRow label="Payer Last Name" value={transaction.payerLastName} />
+          <DetailsRow label="Payment Type" value={transaction.paymentType} />
+          <DetailsRow label="Amount" value={formatCurrency(transaction.amount)} />
+          <DetailsRow label="Timestamp" value={transaction.timestamp} />
+          {transaction.rrn && (
+            <DetailsRow label="RRN" value={transaction.rrn} />
+          )}
+          {transaction.cardNumber && transaction.paymentType === "Card" && (
+            <DetailsRow label="Card Number" value={transaction.cardNumber} />
+          )}
         </div>
 
-        <div className="flex justify-end">
-          <Button onClick={onClose}>Close</Button>
-        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>Close</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -1,24 +1,18 @@
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { LvLogo } from "./LvLogo";
 import { 
   BarChart3Icon, 
-  CalendarIcon,
   CircleDollarSignIcon,
-  FileBarChartIcon,
-  FileTextIcon,
   HomeIcon, 
   LayoutDashboardIcon, 
   LogOutIcon, 
-  PackageIcon,
   SettingsIcon,
-  ShoppingBagIcon, 
-  StoreIcon,
   UserIcon
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface SidebarItemProps {
@@ -37,8 +31,8 @@ function SidebarItem({ icon, label, active, onClick, expanded }: SidebarItemProp
         "w-full justify-start pl-3 mb-1",
         expanded ? "" : "px-0 justify-center",
         active
-          ? "bg-black text-white hover:bg-black hover:text-white"
-          : "text-white/70 hover:text-white hover:bg-black/50"
+          ? "bg-rc-red text-white hover:bg-rc-red hover:text-white"
+          : "text-white/70 hover:text-white hover:bg-rc-red/50"
       )}
       onClick={onClick}
     >
@@ -97,17 +91,6 @@ export function DashboardSidebar({ className, expanded }: DashboardSidebarProps)
         className
       )}
     >
-      {/* <div className={cn(
-        "py-4 flex items-center", 
-        expanded ? "px-3 justify-between" : "justify-center"
-      )}>
-        {expanded ? (
-          <LvLogo className="text-white" />
-        ) : (
-          <LayoutDashboardIcon className="h-6 w-6 text-white" />
-        )}
-      </div> */}
-      
       <div className={cn("py-2", expanded ? "px-3" : "px-0")}>
         {expanded && (
           <p className="text-xs uppercase font-medium text-white/50 mb-2 pl-3">
@@ -139,47 +122,10 @@ export function DashboardSidebar({ className, expanded }: DashboardSidebarProps)
         </nav>
       </div>
 
-      <Separator className="my-4 bg-sidebar-border/50" />
+      <Separator className="my-4 bg-rc-red/30" />
 
-      <div className={cn("py-2", expanded ? "px-3" : "px-0")}>
-        {expanded && (
-          <p className="text-xs uppercase font-medium text-white/50 mb-2 pl-3">
-            {/* Store Management Section is commented out */}
-            {/* Store Management */}
-          </p>
-        )}
-        <nav className="space-y-0.5">
-          {/* <SidebarItem 
-            icon={<PackageIcon className="h-4 w-4" />} 
-            label="Products & Categories" 
-            active={isActive("products")}
-            onClick={() => handleNavigation("products")}
-            expanded={expanded}
-          /> */}
-        </nav>
-      </div>
-
-      <Separator className="my-4 bg-sidebar-border/50" />
-
-      {/* <div className={cn("py-2", expanded ? "px-3" : "px-0")}>
-        {expanded && (
-          <p className="text-xs uppercase font-medium text-white/50 mb-2 pl-3">
-            User Management
-          </p>
-        )}
-        <nav className="space-y-0.5">
-          <SidebarItem 
-            icon={<PackageIcon className="h-4 w-4" />} 
-            label="User Profiles" 
-            active={isActive("customers")}
-            onClick={() => handleNavigation("customers")}
-            expanded={expanded}
-          />
-        </nav>
-      </div> */}
-
-      <div className={cn("mt-auto pt-4", expanded ? "px-3" : "px-0")}>
-        <Separator className="mb-4 bg-sidebar-border/50" />
+      <div className="mt-auto pt-4 px-3">
+        <Separator className="mb-4 bg-rc-red/30" />
         <nav className="space-y-1">
           <SidebarItem 
             icon={<UserIcon className="h-4 w-4" />} 

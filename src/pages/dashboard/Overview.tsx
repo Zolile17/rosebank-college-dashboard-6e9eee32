@@ -2,10 +2,9 @@
 import { DashboardLayout } from "@/components/Dashboard/DashboardLayout";
 import { MetricCard } from "@/components/Dashboard/MetricCard";
 import { RevenueChart } from "@/components/Dashboard/RevenueChart";
-import { TransactionsGraph } from "@/components/Dashboard/TransactionsGraph";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Button } from "@/components/ui/button";
-import { DownloadIcon, FilterIcon, CircleDollarSignIcon, BarChart3Icon, ShoppingBagIcon, UsersIcon, FileDownIcon, Banknote } from "lucide-react";
+import { FilterIcon, CircleDollarSignIcon, BarChart3Icon, UsersIcon, FileDownIcon, Banknote } from "lucide-react";
 import { useState, useEffect } from "react";
 import { isWithinInterval, parseISO } from "date-fns";
 import { getStoreData, getRevenueData, getTransactionsByStore, storeLocations } from "@/data/dashboardData";
@@ -17,16 +16,16 @@ export default function OverviewPage() {
     from: new Date("2025-03-01"),
     to: new Date("2025-03-14"),
   });
-  const [selectedStore, setSelectedStore] = useState("All Stores");
-  const [storeMetrics, setStoreMetrics] = useState(getStoreData(selectedStore));
-  const [revenueData, setRevenueData] = useState(getRevenueData(selectedStore));
-  const [filteredTransactions, setFilteredTransactions] = useState(getTransactionsByStore(selectedStore));
+  const [selectedCampus, setSelectedCampus] = useState("All Campuses");
+  const [campusMetrics, setCampusMetrics] = useState(getStoreData(selectedCampus));
+  const [revenueData, setRevenueData] = useState(getRevenueData(selectedCampus));
+  const [filteredTransactions, setFilteredTransactions] = useState(getTransactionsByStore(selectedCampus));
 
   useEffect(() => {
-    setStoreMetrics(getStoreData(selectedStore));
-    setRevenueData(getRevenueData(selectedStore));
-    setFilteredTransactions(getTransactionsByStore(selectedStore));
-  }, [selectedStore]);
+    setCampusMetrics(getStoreData(selectedCampus));
+    setRevenueData(getRevenueData(selectedCampus));
+    setFilteredTransactions(getTransactionsByStore(selectedCampus));
+  }, [selectedCampus]);
 
   const filteredRevenueData = revenueData.filter((item) => {
     const itemDate = parseISO(item.date);
@@ -36,9 +35,9 @@ export default function OverviewPage() {
   });
 
   const totalRevenue = filteredRevenueData.reduce((sum, item) => sum + item.revenue, 0);
-  const totalSales = storeMetrics.salesCount;
-  const averageOrder = storeMetrics.averageOrder;
-  const newCustomers = storeMetrics.newCustomers;
+  const totalPayments = campusMetrics.paymentsCount;
+  const averagePayment = campusMetrics.averagePayment;
+  const transactionsCount = campusMetrics.transactionsCount;
 
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-ZA', {
@@ -50,9 +49,9 @@ export default function OverviewPage() {
   return (
     <DashboardLayout
       title="Dashboard Overview"
-      description=""
-      selectedStore={selectedStore}
-      onStoreChange={setSelectedStore}
+      description="Student payments tracking and analysis"
+      selectedStore={selectedCampus}
+      onStoreChange={setSelectedCampus}
     >
       <div className="animate-fade-in">
         <div className="flex items-center gap-2 mb-8">
@@ -66,12 +65,12 @@ export default function OverviewPage() {
           </Button>
           <ExportReportDialog 
             trigger={
-              <Button className="bg-lv-gold hover:bg-lv-gold/90 text-black">
+              <Button className="bg-rc-red hover:bg-rc-red/90 text-white">
                 <FileDownIcon className="h-4 w-4 mr-2" />
                 Export
               </Button>
             }
-            selectedStore={selectedStore}
+            selectedStore={selectedCampus}
           />
         </div>
 
@@ -81,35 +80,36 @@ export default function OverviewPage() {
             value={formatCurrency(totalRevenue)}
             change={12.5}
             changeText="vs last period"
-            icon={<Banknote className="w-6 h-6 text-gray-600" />}
-
+            icon={<Banknote className="w-6 h-6 text-rc-red" />}
           />
           <MetricCard
-            title="Sales Count"
-            value={totalSales.toString()}
+            title="Number of Payments"
+            value={totalPayments.toString()}
             change={8.2}
             changeText="vs last period"
-            icon={<BarChart3Icon className="h-4 w-4" />}
+            icon={<BarChart3Icon className="h-4 w-4 text-rc-red" />}
           />
           <MetricCard
             title="Average Revenue"
-            value={formatCurrency(averageOrder)}
+            value={formatCurrency(averagePayment)}
             change={4.1}
             changeText="vs last period"
-            icon={<ShoppingBagIcon className="h-4 w-4" />}
+            icon={<CircleDollarSignIcon className="h-4 w-4 text-rc-red" />}
           />
           <MetricCard
             title="Number of Transactions"
-            value={newCustomers.toString()}
+            value={transactionsCount.toString()}
             change={15.3}
             changeText="vs last period"
-            icon={<UsersIcon className="h-4 w-4" />}
+            icon={<UsersIcon className="h-4 w-4 text-rc-red" />}
           />
         </div>
 
-        <div className="grid gap-4 mt-4">
-          <RevenueChart data={filteredRevenueData} />
-          {/* <TransactionsGraph transactions={filteredTransactions} /> */}
+        <div className="grid gap-4 mt-8">
+          <RevenueChart 
+            title="Payments Over Time" 
+            data={filteredRevenueData} 
+          />
         </div>
       </div>
     </DashboardLayout>

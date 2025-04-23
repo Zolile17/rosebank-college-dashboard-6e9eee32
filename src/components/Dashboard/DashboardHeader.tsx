@@ -15,7 +15,7 @@ import {
   LogOutIcon,
   SearchIcon,
   SettingsIcon,
-  StoreIcon,
+  HomeIcon,
   UserIcon,
   MenuIcon,
 } from "lucide-react";
@@ -31,14 +31,12 @@ import { useEffect, useState } from "react";
 import { storeLocations } from "@/data/dashboardData";
 import { useNavigate } from "react-router-dom";
 
-// Using a context to manage store selection would be better in a real app
-
 interface DashboardHeaderProps {
   className?: string;
   toggleSidebar?: () => void;
   sidebarExpanded?: boolean;
   isMobile?: boolean;
-  onStoreChange?: (store: string) => void;
+  onStoreChange?: (campus: string) => void;
   hideStoreSelector?: boolean;
   title?: string;
   description?: string;
@@ -54,30 +52,30 @@ export function DashboardHeader({
   hideStoreSelector = false,
   title,
   description,
-  selectedStore = "All Stores",
+  selectedStore = "All Campuses",
 }: DashboardHeaderProps) {
-  const [localSelectedStore, setLocalSelectedStore] = useState(selectedStore);
-  const [userRole, setUserRole] = useState("admin"); // admin or store-manager
+  const [localSelectedCampus, setLocalSelectedCampus] = useState(selectedStore);
+  const [userRole, setUserRole] = useState("admin"); // admin or campus-manager
   const [activeItem, setActiveItem] = useState("dashboard");
   const navigate = useNavigate();
 
-  const handleStoreChange = (value: string) => {
-    setLocalSelectedStore(value);
+  const handleCampusChange = (value: string) => {
+    setLocalSelectedCampus(value);
     if (onStoreChange) {
       onStoreChange(value);
     }
   };
 
   useEffect(() => {
-    // Initialize with default store or selected store
+    // Initialize with default campus or selected campus
     if (onStoreChange) {
-      onStoreChange(localSelectedStore);
+      onStoreChange(localSelectedCampus);
     }
   }, []);
 
   useEffect(() => {
     // Update local state when prop changes
-    setLocalSelectedStore(selectedStore);
+    setLocalSelectedCampus(selectedStore);
   }, [selectedStore]);
 
   const handleLogout = () => {
@@ -105,7 +103,7 @@ export function DashboardHeader({
             onClick={toggleSidebar}
             className="mr-2"
           >
-            <MenuIcon className="h-5 w-5" />s
+            <MenuIcon className="h-5 w-5" />
           </Button>
         )}
         {/* Only show logo in header when sidebar is collapsed or on mobile */}
@@ -118,15 +116,15 @@ export function DashboardHeader({
 
       <div className="flex items-center space-x-4">
         {!hideStoreSelector && (
-          <Select value={localSelectedStore} onValueChange={handleStoreChange}>
+          <Select value={localSelectedCampus} onValueChange={handleCampusChange}>
             <SelectTrigger className="w-[200px]">
-              <StoreIcon className="mr-2 h-4 w-4" />
-              <SelectValue placeholder="Select a store" />
+              <HomeIcon className="mr-2 h-4 w-4" />
+              <SelectValue placeholder="Select a campus" />
             </SelectTrigger>
             <SelectContent>
-              {storeLocations.map((store) => (
-                <SelectItem key={store} value={store}>
-                  {store}
+              {storeLocations.map((campus) => (
+                <SelectItem key={campus} value={campus}>
+                  {campus}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -162,7 +160,7 @@ export function DashboardHeader({
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">User</p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  {userRole === "admin" ? "Administrator" : "Store Manager"}
+                  {userRole === "admin" ? "Administrator" : "Campus Manager"}
                 </p>
               </div>
             </DropdownMenuLabel>

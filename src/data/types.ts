@@ -1,14 +1,12 @@
 
 import { ActivityItem } from "@/components/Dashboard/ActivityFeed";
-import { Transaction as ReconciliationTransaction } from "@/components/Dashboard/ReconciliationTable";
-import { Transaction as TransactionsTableTransaction } from "@/components/Dashboard/TransactionsTable";
 
-// Export store data type
-export interface StoreData {
+// Export campus data type
+export interface CampusData {
   revenue: number[];
-  salesCount: number;
-  averageOrder: number;
-  newCustomers: number;
+  paymentsCount: number;
+  averagePayment: number;
+  transactionsCount: number;
 }
 
 // Export revenue data point type
@@ -17,11 +15,38 @@ export interface RevenueDataPoint {
   revenue: number;
 }
 
-// Re-export transaction types for convenience
-export type { 
-  ReconciliationTransaction,
-  TransactionsTableTransaction
-};
+// Transaction types for different components
+export interface ReconciliationTransaction {
+  id: string;
+  studentReference: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  campus: string;
+  payerFirstName: string;
+  payerLastName: string;
+  paymentType: "Card" | "EFT" | "Ozow";
+  amount: number;
+  timestamp: string;
+  status: "successful" | "failed" | "pending";
+  rrn?: string;
+  cardNumber?: string;
+}
 
-// Export activity type with store location
-export type StoreActivity = ActivityItem & { storeLocation?: string };
+export interface TransactionsTableTransaction {
+  id: string;
+  studentReference: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  campus: string;
+  payerFirstName: string;
+  payerLastName: string;
+  paymentType: string;
+  amount: number;
+  timestamp: string;
+  status: "successful" | "failed" | "pending";
+}
+
+// Export activity type with campus location
+export type CampusActivity = ActivityItem & { campusLocation?: string };

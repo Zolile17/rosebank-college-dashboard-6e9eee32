@@ -3,7 +3,7 @@ import { DashboardLayout } from "@/components/Dashboard/DashboardLayout";
 import { ReconciliationTable, Transaction } from "@/components/Dashboard/ReconciliationTable";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Button } from "@/components/ui/button";
-import { DownloadIcon, FilterIcon, FileDownIcon } from "lucide-react";
+import { FilterIcon, FileDownIcon } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { getTransactionsByStore } from "@/data/dashboardData";
@@ -14,10 +14,10 @@ export default function ReconciliationPage() {
     from: new Date(2025, 2, 1),
     to: new Date(2025, 2, 14),
   });
-  const [selectedStore, setSelectedStore] = useState("All Stores");
+  const [selectedCampus, setSelectedCampus] = useState("All Campuses");
 
   // Explicitly type the transactions as Transaction[] from ReconciliationTable testing
-  const filteredTransactions = getTransactionsByStore(selectedStore) as Transaction[];
+  const filteredTransactions = getTransactionsByStore(selectedCampus) as unknown as Transaction[];
 
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-ZA', {
@@ -29,9 +29,9 @@ export default function ReconciliationPage() {
   return (
     <DashboardLayout
       title="Payment Reconciliation"
-      description="Review and reconcile transactions across all stores"
-      selectedStore={selectedStore}
-      onStoreChange={setSelectedStore}
+      description="Review and reconcile student payments across all campuses"
+      selectedStore={selectedCampus}
+      onStoreChange={setSelectedCampus}
     >
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -48,12 +48,12 @@ export default function ReconciliationPage() {
           </div>
           <ExportReportDialog 
             trigger={
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="bg-rc-red text-white hover:bg-rc-red/90">
                 <FileDownIcon className="mr-2 h-4 w-4" />
                 Export
               </Button>
             }
-            selectedStore={selectedStore}
+            selectedStore={selectedCampus}
           />
         </div>
 

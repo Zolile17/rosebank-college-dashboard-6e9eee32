@@ -28,28 +28,44 @@ export default function SalesPage() {
     from: new Date(),
     to: addDays(new Date(), 7),
   });
-  const [selectedStore, setSelectedStore] = useState("All Stores");
+  const [selectedCampus, setSelectedCampus] = useState("All Campuses");
 
-  const revenueData = getRevenueData(selectedStore);
-  const transactions = getTransactionsByStore(selectedStore);
+  const revenueData = getRevenueData(selectedCampus);
+  const transactions = getTransactionsByStore(selectedCampus);
 
-  const topProducts = transactions
-    .reduce((acc, transaction) => {
-      const existing = acc.find(p => p.name === transaction.productName);
-      if (existing) {
-        existing.sales += transaction.amount;
-        existing.units += 1;
-      } else {
-        acc.push({
-          name: transaction.productName,
-          sales: transaction.amount,
-          units: 1
-        });
-      }
-      return acc;
-    }, [] as { name: string; sales: number; units: number }[])
-    .sort((a, b) => b.sales - a.sales)
-    .slice(0, 5);
+  // Group transactions by payment method
+  const paymentMethodData = transactions.reduce((acc, transaction) => {
+    const existing = acc.find(p => p.name === transaction.paymentType);
+    if (existing) {
+      existing.count += 1;
+      existing.value += transaction.amount;
+    } else {
+      acc.push({
+        name: transaction.paymentType,
+        count: 1,
+        value: transaction.amount
+      });
+    }
+    return acc;
+  }, [] as { name: string; count: number; value: number }[]);
+
+  // Group transactions by campus for top performing campuses
+  const campusData = transactions.reduce((acc, transaction) => {
+    const existing = acc.find(p => p.name === transaction.campus);
+    if (existing) {
+      existing.transactions += 1;
+      existing.revenue += transaction.amount;
+    } else {
+      acc.push({
+        name: transaction.campus,
+        transactions: 1,
+        revenue: transaction.amount
+      });
+    }
+    return acc;
+  }, [] as { name: string; transactions: number; revenue: number }[])
+  .sort((a, b) => b.revenue - a.revenue)
+  .slice(0, 5);
 
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-ZA', {
@@ -58,23 +74,23 @@ export default function SalesPage() {
     }).format(value);
   };
 
-  const pieColors = ["#D4AF37", "#b9972c", "#a58326", "#93701f", "#7f5e18"];
+  const chartColors = ["#ea384c", "#000000", "#555555", "#777777", "#999999"];
 
   return (
     <DashboardLayout
       title="Payment Reports"
-      description="Analyse and track your sales performance"
-      selectedStore={selectedStore}
-      onStoreChange={setSelectedStore}
+      description="Analyse and track student payment performance"
+      selectedStore={selectedCampus}
+      onStoreChange={setSelectedCampus}
     >
       <div className="animate-fade-in">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-serif font-medium text-lv-brown">
+            <h1 className="text-3xl font-serif font-medium text-rc-red">
               Payment Reports
             </h1>
             <p className="text-muted-foreground">
-              Overview of daily revenue and top performing products
+              Overview of daily payments and campus performance
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -85,22 +101,22 @@ export default function SalesPage() {
             </Button>
             <ExportReportDialog
               trigger={
-                <Button className="bg-lv-gold hover:bg-lv-gold/90 text-black">
+                <Button className="bg-rc-red hover:bg-rc-red/90 text-white">
                   <FileDownIcon className="h-4 w-4 mr-2" />
                   Export
                 </Button>
               }
-              selectedStore={selectedStore}
+              selectedStore={selectedCampus}
             />
           </div>
         </div>
 
         {/* Top Row */}
         <div className="grid gap-4 md:grid-cols-2 mt-4">
-          {/* Daily Sales Bar Chart */}
+          {/* Daily Payments Bar Chart */}
           <Card>
             <CardHeader>
-              <CardTitle>Daily Receipts</CardTitle>
+              <CardTitle>Payments per Day</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-[300px]">
@@ -108,43 +124,43 @@ export default function SalesPage() {
                   <BarChart data={revenueData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
-                    <YAxis tickFormatter={(value) => `R${(value / 1000).toFixed(0)}k`} />
-                    <Tooltip formatter={(value: number) => formatCurrency(value)} />
-                    <Bar dataKey="revenue" fill="#D4AF37" />
+                    <YAxis tickFormatter={(value) => `${value}`} />
+                    <Tooltip formatter={(value: number) => [`${value} payments`, "Count"]} />
+                    <Bar dataKey="revenue" name="Number of Payments" fill="#ea384c" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
 
-          {/* Product Sales Distribution Pie Chart - Moved up */}
+          {/* Payment Method Distribution Pie Chart */}
           <Card>
             <CardHeader>
-              <CardTitle>Product Revenue Distribution</CardTitle>
+              <CardTitle>Payment Method Distribution</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-[300px] flex justify-center items-center">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={topProducts}
-                      dataKey="sales"
+                      data={paymentMethodData}
+                      dataKey="count"
                       nameKey="name"
                       cx="50%"
                       cy="50%"
                       outerRadius={100}
-                      fill="#D4AF37"
+                      fill="#ea384c"
                     >
-                      {topProducts.map((_, index) => (
+                      {paymentMethodData.map((_, index) => (
                         <Cell
                           key={`cell-${index}`}
-                          fill={pieColors[index % pieColors.length]}
+                          fill={chartColors[index % chartColors.length]}
                         />
                       ))}
                     </Pie>
                     <Tooltip
                       formatter={(value: number, name: string) =>
-                        [`${formatCurrency(value)}`, name]
+                        [`${value} payments`, name]
                       }
                     />
                     <Legend />
@@ -155,28 +171,28 @@ export default function SalesPage() {
           </Card>
         </div>
 
-        {/* Bottom Row: Top Products List - Moved downsss */}
+        {/* Bottom Row: Top Performing Campuses */}
         <div className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>Top Products</CardTitle>
+              <CardTitle>Top Performing Campuses by Revenue</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {topProducts.map((product) => (
-                  <div key={product.name} className="flex items-center justify-between">
+                {campusData.map((campus) => (
+                  <div key={campus.name} className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">{product.name}</p>
+                      <p className="font-medium">{campus.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {product.units} units sold
+                        {campus.transactions} transactions
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium">{formatCurrency(product.sales)}</p>
+                      <p className="font-medium">{formatCurrency(campus.revenue)}</p>
                       <p className="text-sm text-muted-foreground">
                         {(
-                          (product.sales /
-                            topProducts.reduce((sum, p) => sum + p.sales, 0)) *
+                          (campus.revenue /
+                            campusData.reduce((sum, p) => sum + p.revenue, 0)) *
                           100
                         ).toFixed(1)}
                         % of total

@@ -23,39 +23,41 @@ export function TransactionTable({
 }: TransactionTableProps) {
   return (
     <Table>
-      <TableHeader>
+      <TableHeader className="bg-muted">
         <TableRow>
-          <TableHead>TransactionID</TableHead>
-          <TableHead>Product</TableHead>
-          <TableHead>Customer</TableHead>
-          <TableHead>Date</TableHead>
+          <TableHead>Transaction ID</TableHead>
+          <TableHead>Student Reference</TableHead>
+          <TableHead>First Name</TableHead>
+          <TableHead>Last Name</TableHead>
+          <TableHead>Email Address</TableHead>
+          <TableHead>Campus</TableHead>
+          <TableHead>Payer First Name</TableHead>
+          <TableHead>Payer Last Name</TableHead>
+          <TableHead>Payment Type</TableHead>
           <TableHead>Amount</TableHead>
+          <TableHead>Timestamp</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>RRN</TableHead>
-          <TableHead>TerminalID</TableHead>
-          <TableHead>Store</TableHead>
-          <TableHead>Served By</TableHead>
-          <TableHead>Email</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {transactions.map((transaction) => (
-          <TableRow key={transaction.id}>
+          <TableRow key={transaction.id} className="cursor-pointer hover:bg-muted/50" onClick={() => onViewDetails(transaction)}>
             <TableCell className="font-medium">
               {transaction.id}
             </TableCell>
-            <TableCell>{transaction.productName}</TableCell>
-            <TableCell>{transaction.customer}</TableCell>
-            <TableCell>{transaction.date}</TableCell>
+            <TableCell>{transaction.studentReference}</TableCell>
+            <TableCell>{transaction.firstName}</TableCell>
+            <TableCell>{transaction.lastName}</TableCell>
+            <TableCell>{transaction.email}</TableCell>
+            <TableCell>{transaction.campus}</TableCell>
+            <TableCell>{transaction.payerFirstName}</TableCell>
+            <TableCell>{transaction.payerLastName}</TableCell>
+            <TableCell>{transaction.paymentType}</TableCell>
             <TableCell>{formatCurrency(transaction.amount)}</TableCell>
+            <TableCell>{transaction.timestamp}</TableCell>
             <TableCell>
               <TransactionStatusBadge status={transaction.status} />
             </TableCell>
-            <TableCell>{transaction.rrn || "N/A"}</TableCell>
-            <TableCell>{transaction.terminalId || "N/A"}</TableCell>
-            <TableCell>{transaction.store || "N/A"}</TableCell>
-            <TableCell>{transaction.servedBy || "N/A"}</TableCell>
-            <TableCell>{transaction.email || "N/A"}</TableCell>
           </TableRow>
         ))}
       </TableBody>

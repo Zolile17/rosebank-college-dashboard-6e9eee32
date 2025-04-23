@@ -1,20 +1,19 @@
 
 export interface Transaction {
   id: string;
-  productName: string;
-  customer: string;
-  date: string;
+  studentReference: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  campus: string;
+  payerFirstName: string;
+  payerLastName: string;
+  paymentType: string;
   amount: number;
+  timestamp: string;
   status: string;
-  storeLocation: string;
   rrn?: string;
   cardNumber?: string;
-  servedBy?: string;
-  paymentMethod?: string;
-  notes?: string;
-  terminalId: string;
-  store: string;
-  email: string;
 }
 
 export interface ReconciliationTableProps {

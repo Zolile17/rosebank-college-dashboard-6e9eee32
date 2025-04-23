@@ -2,8 +2,19 @@
 import { ReconciliationTransaction, TransactionsTableTransaction } from "./types";
 import { generateRRN, generateMaskedCard } from "./utils";
 
-// Cashier names for transactions
-const cashierNames = [
+// Helper function to hash student reference
+const hashStudentRef = (id: string): string => {
+  return `SC${id.substring(0, 8)}`;
+};
+
+// Helper function to mask email
+const maskEmail = (email: string): string => {
+  const [username, domain] = email.split('@');
+  return `${username.substring(0, 2)}***@${domain}`;
+};
+
+// Staff names for payments
+const staffNames = [
   "Thabo Mbulazi",
   "Lerato Zulu",
   "Grace Ndlovu",
@@ -16,194 +27,206 @@ const cashierNames = [
   "Themba Mosimane"
 ];
 
-// Sample transactions with updated data
+// Sample student data with updated fields for campus payments
 export const transactionsData: ReconciliationTransaction[] = [
   {
     id: "T1001",
-    productName: "Neverfull MM Tote",
-    customer: "Emily Parker",
-    date: "Apr 7, 2025",
+    studentReference: hashStudentRef("12345678"),
+    firstName: "Em***",
+    lastName: "Pa***",
+    email: maskEmail("emily.parker@example.com"),
+    timestamp: "Apr 7, 2025, 09:15 AM",
     amount: 16500,
-    status: "completed",
-    storeLocation: "Cape Town",
+    status: "successful",
+    campus: "Cape Town",
+    payerFirstName: "Thomas",
+    payerLastName: "Parker",
+    paymentType: "Card",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[0],
-    terminalId: "001",
-    store: "Cape Town",
-    email: "thabo.parker@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1002",
-    productName: "Speedy 30 Handbag",
-    customer: "Sarah Johnson",
-    date: "Apr 7, 2025",
+    studentReference: hashStudentRef("23456789"),
+    firstName: "Sa***",
+    lastName: "Jo***",
+    email: maskEmail("sarah.johnson@example.com"),
+    timestamp: "Apr 7, 2025, 10:30 AM",
     amount: 13506,
-    status: "refund",
-    storeLocation: "Johannesburg",
+    status: "failed",
+    campus: "Braamfontein",
+    payerFirstName: "Robert",
+    payerLastName: "Johnson",
+    paymentType: "EFT",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[1],
-    terminalId: "002",
-    store: "Johannesburg",
-    email: "lerato.johnson@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1003",
-    productName: "Monogram Shawl",
-    customer: "Thomas Wright",
-    date: "Apr 6, 2025",
+    studentReference: hashStudentRef("34567890"),
+    firstName: "Th***",
+    lastName: "Wr***",
+    email: maskEmail("thomas.wright@example.com"),
+    timestamp: "Apr 6, 2025, 14:22 PM",
     amount: 4905,
     status: "pending",
-    storeLocation: "Johannesburg",
+    campus: "Braamfontein",
+    payerFirstName: "Thomas",
+    payerLastName: "Wright",
+    paymentType: "Ozow",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[2],
-    terminalId: "003",
-    store: "Johannesburg",
-    email: "grace.wright@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1004",
-    productName: "Horizon 55 Luggage",
-    customer: "David Chen",
-    date: "Apr 6, 2025",
+    studentReference: hashStudentRef("45678901"),
+    firstName: "Da***",
+    lastName: "Ch***",
+    email: maskEmail("david.chen@example.com"),
+    timestamp: "Apr 6, 2025, 15:45 PM",
     amount: 2800,
     status: "failed",
-    storeLocation: "Cape Town",
+    campus: "Cape Town",
+    payerFirstName: "Ming",
+    payerLastName: "Chen",
+    paymentType: "Card",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[3],
-    terminalId: "004",
-    store: "Cape Town",
-    email: "sipho.chen@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1005",
-    productName: "Tambour Watch",
-    customer: "Julia Roberts",
-    date: "Apr 5, 2025",
+    studentReference: hashStudentRef("56789012"),
+    firstName: "Ju***",
+    lastName: "Ro***",
+    email: maskEmail("julia.roberts@example.com"),
+    timestamp: "Apr 5, 2025, 08:10 AM",
     amount: 4950,
-    status: "refund",
-    storeLocation: "Online Store",
+    status: "failed",
+    campus: "Durban",
+    payerFirstName: "Eric",
+    payerLastName: "Roberts",
+    paymentType: "EFT",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[4],
-    terminalId: "005",
-    store: "Online Store",
-    email: "nomsa.roberts@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1006",
-    productName: "Capucines MM Bag",
-    customer: "Alexandra Smith",
-    date: "Apr 5, 2025",
+    studentReference: hashStudentRef("67890123"),
+    firstName: "Al***",
+    lastName: "Sm***",
+    email: maskEmail("alexandra.smith@example.com"),
+    timestamp: "Apr 5, 2025, 09:30 AM",
     amount: 46500,
-    status: "completed",
-    storeLocation: "Cape Town",
+    status: "successful",
+    campus: "Cape Town",
+    payerFirstName: "Alexandra",
+    payerLastName: "Smith",
+    paymentType: "Card",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[5],
-    terminalId: "006",
-    store: "Cape Town",
-    email: "bongani.smith@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1007",
-    productName: "LV Archlight Sneakers",
-    customer: "Michael Brown",
-    date: "Apr 4, 2025",
+    studentReference: hashStudentRef("78901234"),
+    firstName: "Mi***",
+    lastName: "Br***",
+    email: maskEmail("michael.brown@example.com"),
+    timestamp: "Apr 4, 2025, 11:20 AM",
     amount: 10900,
-    status: "refund",
-    storeLocation: "Johannesburg",
+    status: "failed",
+    campus: "Braamfontein",
+    payerFirstName: "Jackson",
+    payerLastName: "Brown",
+    paymentType: "Ozow",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[6],
-    terminalId: "007",
-    store: "Johannesburg",
-    email: "ayanda.brown@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1008",
-    productName: "Twist Chain Wallet",
-    customer: "Sophia Garcia",
-    date: "Apr 4, 2025",
+    studentReference: hashStudentRef("89012345"),
+    firstName: "So***",
+    lastName: "Ga***",
+    email: maskEmail("sophia.garcia@example.com"),
+    timestamp: "Apr 4, 2025, 12:15 PM",
     amount: 1850,
     status: "pending",
-    storeLocation: "Cape Town",
+    campus: "Cape Town",
+    payerFirstName: "Carlos",
+    payerLastName: "Garcia",
+    paymentType: "EFT",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[7],
-    terminalId: "008",
-    store: "Cape Town",
-    email: "nelson.garcia@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1009",
-    productName: "Petit Palais Clutch",
-    customer: "Naomi Campbell",
-    date: "Apr 3, 2025",
+    studentReference: hashStudentRef("90123456"),
+    firstName: "Na***",
+    lastName: "Ca***",
+    email: maskEmail("naomi.campbell@example.com"),
+    timestamp: "Apr 3, 2025, 13:45 PM",
     amount: 2150,
-    status: "completed",
-    storeLocation: "Cape Town",
+    status: "successful",
+    campus: "Pretoria",
+    payerFirstName: "Naomi",
+    payerLastName: "Campbell",
+    paymentType: "Card",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[8],
-    terminalId: "009",
-    store: "Cape Town",
-    email: "precious.campbell@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1010",
-    productName: "Monogram Belt",
-    customer: "James Wilson",
-    date: "Apr 3, 2025",
+    studentReference: hashStudentRef("01234567"),
+    firstName: "Ja***",
+    lastName: "Wi***",
+    email: maskEmail("james.wilson@example.com"),
+    timestamp: "Apr 3, 2025, 14:30 PM",
     amount: 5250,
     status: "failed",
-    storeLocation: "Johannesburg",
+    campus: "Polokwane",
+    payerFirstName: "James",
+    payerLastName: "Wilson",
+    paymentType: "Ozow",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[9],
-    terminalId: "010",
-    store: "Johannesburg",
-    email: "themba.wilson@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1011",
-    productName: "Alma BB Handbag",
-    customer: "Olivia Chen",
-    date: "Apr 2, 2025",
+    studentReference: hashStudentRef("12345670"),
+    firstName: "Ol***",
+    lastName: "Ch***",
+    email: maskEmail("olivia.chen@example.com"),
+    timestamp: "Apr 2, 2025, 10:20 AM",
     amount: 1590,
-    status: "refund",
-    storeLocation: "Cape Town",
+    status: "failed",
+    campus: "Durban",
+    payerFirstName: "Olivia",
+    payerLastName: "Chen",
+    paymentType: "Card",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[0],
-    terminalId: "011",
-    store: "Cape Town",
-    email: "thabo.chen@example.com"
+    cardNumber: generateMaskedCard()
   },
   {
     id: "T1012",
-    productName: "Dauphine Wallet",
-    customer: "Emma Watson",
-    date: "Apr 2, 2025",
+    studentReference: hashStudentRef("23456701"),
+    firstName: "Em***",
+    lastName: "Wa***",
+    email: maskEmail("emma.watson@example.com"),
+    timestamp: "Apr 2, 2025, 11:15 AM",
     amount: 750,
-    status: "completed",
-    storeLocation: "Johannesburg",
+    status: "successful",
+    campus: "Braamfontein",
+    payerFirstName: "John",
+    payerLastName: "Watson",
+    paymentType: "EFT",
     rrn: generateRRN(),
-    cardNumber: generateMaskedCard(),
-    servedBy: cashierNames[1],
-    terminalId: "012",
-    store: "Johannesburg",
-    email: "lerato.watson@example.com"
+    cardNumber: generateMaskedCard()
   }
 ];
 
-// Filter transactions by store
-export const getTransactionsByStore = (store: string = "All Stores"): TransactionsTableTransaction[] => {
-  if (store === "All Stores") {
+// Filter transactions by campus
+export const getTransactionsByCampus = (campus: string = "All Campuses"): TransactionsTableTransaction[] => {
+  if (campus === "All Campuses") {
     return transactionsData as TransactionsTableTransaction[];
   }
-  return (transactionsData.filter(transaction => transaction.storeLocation === store)) as TransactionsTableTransaction[];
+  return (transactionsData.filter(transaction => transaction.campus === campus)) as TransactionsTableTransaction[];
 };
