@@ -106,7 +106,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     campus: "Braamfontein",
     payerFirstName: "Thomas",
     iieFaculty: assignRandomFaculty(),
-    paymentType: "Ozow",
+    paymentType: "Instant",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
   },
@@ -170,7 +170,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     campus: "Braamfontein",
     payerFirstName: "Jackson",
     iieFaculty: assignRandomFaculty(),
-    paymentType: "Ozow",
+    paymentType: "Instant",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
   },
@@ -218,7 +218,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     campus: "Polokwane",
     payerFirstName: "James",
     iieFaculty: assignRandomFaculty(),
-    paymentType: "Ozow",
+    paymentType: "Instant",
     rrn: generateRRN(),
     cardNumber: generateMaskedCard()
   },

@@ -83,7 +83,7 @@ export default function OverviewPage() {
             icon={<Banknote className="w-6 h-6 text-rc-red" />}
           />
           <MetricCard
-            title="Number of Payments"
+            title="Number of Transactions"
             value={totalPayments.toString()}
             change={8.2}
             changeText="vs last period"
@@ -97,7 +97,7 @@ export default function OverviewPage() {
             icon={<CircleDollarSignIcon className="h-4 w-4 text-rc-red" />}
           />
           <MetricCard
-            title="Number of Transactions"
+            title="Number of Students"
             value={transactionsCount.toString()}
             change={15.3}
             changeText="vs last period"

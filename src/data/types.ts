@@ -29,6 +29,7 @@ export interface ReconciliationTransaction {
   payerFirstName: string;
   amount: number;
   timestamp: string;
+  paymentType: string;
   status: "successful" | "failed" | "pending";
   rrn?: string;
   cardNumber?: string;

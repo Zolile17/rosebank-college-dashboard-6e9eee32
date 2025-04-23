@@ -1,4 +1,3 @@
-
 import { DashboardLayout } from "@/components/Dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,7 @@ import {
   Legend,
 } from "recharts";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { addDays } from "date-fns";
 import { ExportReportDialog } from "@/components/Dashboard/ExportReportDialog";
 import { getRevenueData, getTransactionsByStore } from "@/data/dashboardData";
@@ -30,42 +29,124 @@ export default function SalesPage() {
   });
   const [selectedCampus, setSelectedCampus] = useState("All Campuses");
 
-  const revenueData = getRevenueData(selectedCampus);
-  const transactions = getTransactionsByStore(selectedCampus);
+  // Generate high-volume revenue data locally
+  const revenueData = useMemo(() => {
+    // Generate date range for the past 14 days
+    const days = 14;
+    const result = [];
+    
+    for (let i = 0; i < days; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      const formattedDate = date.toLocaleDateString('en-ZA', { month: 'short', day: 'numeric' });
+      
+      // Generate random count between 400-2000 payments per day
+      let multiplier = 1;
+      if (selectedCampus === "Cape Town") multiplier = 1.2;
+      if (selectedCampus === "Braamfontein") multiplier = 1.5;
+      if (selectedCampus === "Durban") multiplier = 0.8;
+      if (selectedCampus === "Pretoria") multiplier = 0.9;
+      if (selectedCampus === "Polokwane") multiplier = 0.7;
+      
+      const revenue = Math.floor(Math.random() * 1600 + 400) * multiplier;
+      
+      result.unshift({
+        date: formattedDate,
+        revenue: Math.round(revenue)
+      });
+    }
+    
+    return result;
+  }, [selectedCampus]);
+
+  // Generate synthetic transactions data locally
+  const transactions = useMemo(() => {
+    const campuses = ["Cape Town", "Braamfontein", "Durban", "Pretoria", "Polokwane"];
+    const paymentTypes = ["Card", "EFT", "Instant", "Cash"];
+    
+    // Define distribution of payment types (approximate percentages)
+    const paymentTypeDistribution = {
+      "Card": 0.45,  // 45% of payments
+      "EFT": 0.30,   // 30% of payments
+      "Instant": 0.15,  // 15% of payments
+    
+    
+    };
+    
+    // Generate synthetic transactions
+    const result = [];
+    const totalTransactions = 5000; // Large number of transactions
+    
+    for (let i = 0; i < totalTransactions; i++) {
+      // If campus is selected, only use that campus; otherwise randomly select
+      const campus = selectedCampus !== "All Campuses" ? 
+        selectedCampus : 
+        campuses[Math.floor(Math.random() * campuses.length)];
+      
+      // Select payment type based on distribution
+      const rand = Math.random();
+      let cumulativeProb = 0;
+      let paymentType = paymentTypes[0];
+      
+      for (const [type, prob] of Object.entries(paymentTypeDistribution)) {
+        cumulativeProb += prob;
+        if (rand <= cumulativeProb) {
+          paymentType = type;
+          break;
+        }
+      }
+      
+      // Generate transaction amount (between R500 and R50,000)
+      const amount = Math.floor(Math.random() * 49500) + 500;
+      
+      result.push({
+        id: `T${i}`,
+        campus: campus,
+        paymentType: paymentType,
+        amount: amount
+      });
+    }
+    
+    return result;
+  }, [selectedCampus]);
 
   // Group transactions by payment method
-  const paymentMethodData = transactions.reduce((acc, transaction) => {
-    const existing = acc.find(p => p.name === transaction.paymentType);
-    if (existing) {
-      existing.count += 1;
-      existing.value += transaction.amount;
-    } else {
-      acc.push({
-        name: transaction.paymentType,
-        count: 1,
-        value: transaction.amount
-      });
-    }
-    return acc;
-  }, [] as { name: string; count: number; value: number }[]);
+  const paymentMethodData = useMemo(() => {
+    return transactions.reduce((acc, transaction) => {
+      const existing = acc.find(p => p.name === transaction.paymentType);
+      if (existing) {
+        existing.count += 1;
+        existing.value += transaction.amount;
+      } else {
+        acc.push({
+          name: transaction.paymentType,
+          count: 1,
+          value: transaction.amount
+        });
+      }
+      return acc;
+    }, [] as { name: string; count: number; value: number }[]);
+  }, [transactions]);
 
   // Group transactions by campus for top performing campuses
-  const campusData = transactions.reduce((acc, transaction) => {
-    const existing = acc.find(p => p.name === transaction.campus);
-    if (existing) {
-      existing.transactions += 1;
-      existing.revenue += transaction.amount;
-    } else {
-      acc.push({
-        name: transaction.campus,
-        transactions: 1,
-        revenue: transaction.amount
-      });
-    }
-    return acc;
-  }, [] as { name: string; transactions: number; revenue: number }[])
-  .sort((a, b) => b.revenue - a.revenue)
-  .slice(0, 5);
+  const campusData = useMemo(() => {
+    return transactions.reduce((acc, transaction) => {
+      const existing = acc.find(p => p.name === transaction.campus);
+      if (existing) {
+        existing.transactions += 1;
+        existing.revenue += transaction.amount;
+      } else {
+        acc.push({
+          name: transaction.campus,
+          transactions: 1,
+          revenue: transaction.amount
+        });
+      }
+      return acc;
+    }, [] as { name: string; transactions: number; revenue: number }[])
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5);
+  }, [transactions]);
 
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-ZA', {

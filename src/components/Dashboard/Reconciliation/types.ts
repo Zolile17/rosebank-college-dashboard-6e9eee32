@@ -7,6 +7,7 @@ export interface Transaction {
   email: string;
   campus: string;
   payerFirstName: string;
+  paymentType: string;
   amount: number;
   timestamp: string;
   status: string;

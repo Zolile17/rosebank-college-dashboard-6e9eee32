@@ -31,8 +31,9 @@ export function TransactionTable({
           <TableHead>Last Name</TableHead>
           <TableHead>Email Address</TableHead>
           <TableHead>Campus</TableHead>
-          <TableHead>Payer First Name</TableHead>
+          {/* <TableHead>Payer First Name</TableHead> */}
           <TableHead>IIE Faculty</TableHead>
+          <TableHead>Payment Type</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead>Timestamp</TableHead>
           <TableHead>Status</TableHead>
@@ -49,8 +50,9 @@ export function TransactionTable({
             <TableCell>{transaction.lastName}</TableCell>
             <TableCell>{transaction.email}</TableCell>
             <TableCell>{transaction.campus}</TableCell>
-            <TableCell>{transaction.payerFirstName}</TableCell>
+            {/* <TableCell>{transaction.payerFirstName}</TableCell> */}
             <TableCell>{transaction.iieFaculty || "—"}</TableCell>
+            <TableCell>{transaction.paymentType}</TableCell>
             <TableCell>{formatCurrency(transaction.amount)}</TableCell>
             <TableCell>{transaction.timestamp}</TableCell>
             <TableCell>
