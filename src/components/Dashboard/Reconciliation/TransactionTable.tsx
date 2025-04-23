@@ -35,7 +35,9 @@ export function TransactionTable({
           <TableHead>IIE Faculty</TableHead>
           <TableHead>Payment Type</TableHead>
           <TableHead>Amount</TableHead>
+          <TableHead>RRN</TableHead>
           <TableHead>Timestamp</TableHead>
+       
           <TableHead>Status</TableHead>
         </TableRow>
       </TableHeader>
@@ -54,8 +56,10 @@ export function TransactionTable({
             <TableCell>{transaction.iieFaculty || "—"}</TableCell>
             <TableCell>{transaction.paymentType}</TableCell>
             <TableCell>{formatCurrency(transaction.amount)}</TableCell>
+            <TableCell>{transaction.rrn}</TableCell>
             <TableCell>{transaction.timestamp}</TableCell>
             <TableCell>
+            
               <TransactionStatusBadge status={transaction.status} />
             </TableCell>
           </TableRow>
