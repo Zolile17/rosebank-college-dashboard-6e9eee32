@@ -1,4 +1,3 @@
-
 import { ReconciliationTransaction, TransactionsTableTransaction } from "./types";
 import { generateRRN, generateMaskedCard } from "./utils";
 
@@ -26,6 +25,25 @@ const staffNames = [
   "Precious Mokoena",
   "Themba Mosimane"
 ];
+
+// Sample product names for transactions
+const productNames = [
+  "Registration Fee",
+  "Tuition Fee",
+  "Exam Fee",
+  "Application Fee",
+  "Student Card Replacement",
+  "Library Fine",
+  "Accommodation Fee",
+  "Course Materials",
+  "Technology Fee",
+  "Graduation Fee"
+];
+
+// Generate customer names
+const getCustomerName = (firstName: string, lastName: string): string => {
+  return `${firstName.replace("***", "")} ${lastName.replace("***", "")}`;
+};
 
 // Sample student data with updated fields for campus payments
 export const transactionsData: ReconciliationTransaction[] = [
@@ -223,10 +241,24 @@ export const transactionsData: ReconciliationTransaction[] = [
   }
 ];
 
+// Convert to TransactionsTableTransaction with necessary fields for the UI
+const convertToTableTransactions = (data: ReconciliationTransaction[]): TransactionsTableTransaction[] => {
+  return data.map(t => {
+    const customerName = getCustomerName(t.firstName, t.lastName);
+    return {
+      ...t,
+      date: t.timestamp,
+      productName: productNames[Math.floor(Math.random() * productNames.length)],
+      customer: customerName,
+      storeLocation: t.campus
+    };
+  });
+};
+
 // Filter transactions by campus
 export const getTransactionsByCampus = (campus: string = "All Campuses"): TransactionsTableTransaction[] => {
   if (campus === "All Campuses") {
-    return transactionsData as TransactionsTableTransaction[];
+    return convertToTableTransactions(transactionsData);
   }
-  return (transactionsData.filter(transaction => transaction.campus === campus)) as TransactionsTableTransaction[];
+  return convertToTableTransactions(transactionsData.filter(transaction => transaction.campus === campus));
 };

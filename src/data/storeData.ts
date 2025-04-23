@@ -17,37 +17,55 @@ const campusData: Record<string, CampusData> = {
     revenue: [98500, 92000, 85600, 97800, 105200, 112400, 132000, 124500, 119800, 115300, 121000, 128700, 142300, 156000],
     paymentsCount: 476,
     averagePayment: 2240,
-    transactionsCount: 138
+    transactionsCount: 138,
+    salesCount: 476,
+    averageOrder: 2240,
+    newCustomers: 138
   },
   "Braamfontein": {
     revenue: [24500, 22000, 18600, 21800, 25200, 27400, 32000, 30500, 29800, 28300, 30000, 31700, 35300, 38000],
     paymentsCount: 212,
     averagePayment: 2580,
-    transactionsCount: 132
+    transactionsCount: 132,
+    salesCount: 212,
+    averageOrder: 2580,
+    newCustomers: 54
   },
   "Cape Town": {
     revenue: [26500, 24000, 22600, 25800, 28200, 30400, 34000, 32500, 30800, 29300, 31000, 32700, 36300, 39000],
     paymentsCount: 324,
     averagePayment: 2760,
-    transactionsCount: 235
+    transactionsCount: 235,
+    salesCount: 324,
+    averageOrder: 2760,
+    newCustomers: 72
   },
   "Durban": {
     revenue: [27500, 26000, 25600, 27800, 29200, 30400, 34000, 32500, 31800, 30300, 32000, 33700, 36300, 38000],
     paymentsCount: 632,
     averagePayment: 2360,
-    transactionsCount: 442
+    transactionsCount: 442,
+    salesCount: 632,
+    averageOrder: 2360,
+    newCustomers: 128
   },
   "Pretoria": {
     revenue: [22500, 20000, 21600, 23800, 24200, 25400, 28000, 27500, 26800, 25300, 27000, 28700, 30300, 32000],
     paymentsCount: 532,
     averagePayment: 2460,
-    transactionsCount: 342
+    transactionsCount: 342,
+    salesCount: 532,
+    averageOrder: 2460,
+    newCustomers: 98
   },
   "Polokwane": {
     revenue: [18500, 17000, 16600, 18800, 19200, 20400, 22000, 21500, 20800, 19300, 21000, 22700, 24300, 26000],
     paymentsCount: 432,
     averagePayment: 1960,
-    transactionsCount: 242
+    transactionsCount: 242,
+    salesCount: 432,
+    averageOrder: 1960,
+    newCustomers: 86
   }
 };
 

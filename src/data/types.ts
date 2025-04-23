@@ -7,6 +7,9 @@ export interface CampusData {
   paymentsCount: number;
   averagePayment: number;
   transactionsCount: number;
+  salesCount: number;
+  averageOrder: number;
+  newCustomers: number;
 }
 
 // Export revenue data point type
@@ -46,7 +49,14 @@ export interface TransactionsTableTransaction {
   amount: number;
   timestamp: string;
   status: "successful" | "failed" | "pending";
+  date: string;
+  productName: string;
+  customer: string;
+  storeLocation: string;
 }
 
 // Export activity type with campus location
 export type CampusActivity = ActivityItem & { campusLocation?: string };
+
+// Add StoreActivity type
+export type StoreActivity = ActivityItem & { storeLocation?: string };

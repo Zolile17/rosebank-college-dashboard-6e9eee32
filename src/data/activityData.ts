@@ -1,4 +1,3 @@
-
 import { StoreActivity } from "./types";
 
 // Filter activities by store

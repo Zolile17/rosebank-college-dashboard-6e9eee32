@@ -39,7 +39,6 @@ import { Transaction } from "@/components/Dashboard/TransactionsTable";
 import { pdf } from "@react-pdf/renderer";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-// Create styles for PDF
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -97,7 +96,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// PDF Document Component
 const SalesReportPDF = ({ data, store, dateRange }) => (
   <Document>
     <Page size="A4" style={styles.page}>
@@ -221,7 +219,14 @@ export function ExportReportDialog({ trigger, selectedStore }: ExportReportDialo
   const handleExport = async () => {
     if (!selectedStore || !startDate || !endDate) return;
 
-    const filteredTransactions = getTransactionsByStore(selectedStore).filter(
+    const transactions = getTransactionsByStore(selectedStore);
+    
+    if (!transactions || transactions.length === 0) {
+      console.error("No transactions found");
+      return;
+    }
+    
+    const filteredTransactions = transactions.filter(
       (transaction) => {
         const transactionDate = new Date(transaction.date);
         return transactionDate >= startDate && transactionDate <= endDate;
@@ -233,7 +238,6 @@ export function ExportReportDialog({ trigger, selectedStore }: ExportReportDialo
     const totalTransactions = filteredTransactions.length;
     const averageTransaction = totalTransactions > 0 ? totalSales / totalTransactions : 0;
 
-    // Calculate top products
     const topProducts = filteredTransactions
       .reduce((acc, t) => {
         const existing = acc.find(p => p.name === t.productName);
@@ -343,7 +347,6 @@ export function ExportReportDialog({ trigger, selectedStore }: ExportReportDialo
       link.click();
       URL.revokeObjectURL(url);
     } else {
-      // CSV export logic
       const csvContent = [
         ["Sales Report"],
         [selectedStore],
@@ -390,6 +393,7 @@ export function ExportReportDialog({ trigger, selectedStore }: ExportReportDialo
 
   const renderPDFPreview = () => {
     const storeData = getStoreData(selectedStore);
+    
     let PDFComponent;
 
     switch (reportType) {

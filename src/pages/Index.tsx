@@ -22,6 +22,7 @@ import {
   getTransactionsByStore,
   getActivitiesByStore
 } from "@/data/dashboardData";
+import { Transaction } from "@/components/Dashboard/TransactionsTable";
 
 // Mock data for store comparison
 const storeComparisonData = [
@@ -42,13 +43,25 @@ const DashboardContent = ({ selectedStore }: DashboardContentProps) => {
   const [userRole, setUserRole] = useState<"admin" | "store-manager">("admin");
   const [storeMetrics, setStoreMetrics] = useState(getStoreData(selectedStore));
   const [revenueData, setRevenueData] = useState(getRevenueData(selectedStore));
-  const [filteredTransactions, setFilteredTransactions] = useState(getTransactionsByStore(selectedStore));
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [filteredActivities, setFilteredActivities] = useState(getActivitiesByStore(selectedStore));
 
   useEffect(() => {
     setStoreMetrics(getStoreData(selectedStore));
     setRevenueData(getRevenueData(selectedStore));
-    setFilteredTransactions(getTransactionsByStore(selectedStore));
+    
+    // Convert TransactionsTableTransaction to Transaction format
+    const transactions = getTransactionsByStore(selectedStore).map(t => ({
+      id: t.id,
+      productName: t.productName,
+      customer: t.customer,
+      date: t.date,
+      amount: t.amount,
+      status: t.status as "completed" | "pending" | "failed",
+      storeLocation: t.storeLocation
+    }));
+    
+    setFilteredTransactions(transactions);
     setFilteredActivities(getActivitiesByStore(selectedStore));
   }, [selectedStore]);
 
