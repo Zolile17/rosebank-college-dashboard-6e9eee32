@@ -142,17 +142,13 @@ export function DashboardHeader({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="/avatars/01.png" alt="@user" />
-                <AvatarFallback>
-                  <img
-                    src="/images/user-profile.png"
-                    alt="Profile Picture"
-                    width={150}
-                    height={75}
-                  />
-                </AvatarFallback>
-              </Avatar>
+            <Avatar className="h-8 w-8">
+  <AvatarImage src="/avatars/01.png" alt="@user" />
+  <AvatarFallback className="flex items-center justify-center bg-muted text-white">
+    <UserIcon className="h-4 w-4" />
+  </AvatarFallback>
+</Avatar>
+
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
