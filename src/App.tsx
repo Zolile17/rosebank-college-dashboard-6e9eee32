@@ -28,7 +28,7 @@ const App = () => (
       <Sonner />
 
       {/* ✅ Add basename for GitHub Pages */}
-      <Router basename="/Rosebank-College-Dashboard">
+      <Router basename="/rosebank-college-dashboard-6e9eee32">
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
