@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom LV colors
+				lv: {
+					brown: '#4E3829',
+					gold: '#B99F65',
+					beige: '#F5F2E9',
+					cream: '#F8F5F0',
+					charcoal: '#2C2C2C',
+					lightgold: '#D0C09F',
+					darkbrown: '#332518',
 				}
 			},
 			borderRadius: {
@@ -84,11 +95,20 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.5s ease-out'
+			},
+			fontFamily: {
+				serif: ['Georgia', 'Cambria', 'serif'],
+				sans: ['Helvetica', 'Arial', 'sans-serif']
 			}
 		}
 	},
