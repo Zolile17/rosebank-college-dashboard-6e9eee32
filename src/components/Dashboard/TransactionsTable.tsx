@@ -33,7 +33,7 @@ export interface Transaction {
   customer: string;
   date: string;
   amount: number;
-  status: "completed" | "pending" | "failed";
+  status: "completed" | "pending" | "failed" | "refund";
   storeLocation: string;
 }
 
