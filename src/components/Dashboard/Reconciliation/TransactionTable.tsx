@@ -1,4 +1,3 @@
-
 import {
   Table,
   TableBody,
@@ -44,6 +43,10 @@ export function TransactionTable({
     );
   });
 
+  const maskStudentId = (id: string): string => {
+    return id.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2');
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center px-2">
@@ -77,7 +80,7 @@ export function TransactionTable({
           {filteredTransactions.map((transaction) => (
             <TableRow key={transaction.id} className="cursor-pointer hover:bg-muted/50" onClick={() => onViewDetails(transaction)}>
               <TableCell className="font-medium">{transaction.id}</TableCell>
-              <TableCell>{transaction.studentId}</TableCell>
+              <TableCell>{maskStudentId(transaction.studentId)}</TableCell>
               <TableCell>{transaction.studentReference}</TableCell>
               <TableCell>{transaction.firstName}</TableCell>
               <TableCell>{transaction.lastName}</TableCell>
