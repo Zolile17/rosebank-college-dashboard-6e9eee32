@@ -1,6 +1,4 @@
 
-import { ActivityItem } from "@/components/Dashboard/ActivityFeed";
-
 // Export campus data type
 export interface CampusData {
   revenue: number[];
@@ -18,9 +16,10 @@ export interface RevenueDataPoint {
   revenue: number;
 }
 
-// Updated: Added iieFaculty field
+// Updated: Added studentId and iieFaculty fields
 export interface ReconciliationTransaction {
   id: string;
+  studentId: string;
   studentReference: string;
   firstName: string;
   lastName: string;
@@ -38,6 +37,7 @@ export interface ReconciliationTransaction {
 
 export interface TransactionsTableTransaction {
   id: string;
+  studentId: string;
   studentReference: string;
   firstName: string;
   lastName: string;

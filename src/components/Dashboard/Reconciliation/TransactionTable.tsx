@@ -1,3 +1,4 @@
+
 import {
   Table,
   TableBody,
@@ -42,7 +43,7 @@ export function TransactionTable({
         {transactions.map((transaction) => (
           <TableRow key={transaction.id} className="cursor-pointer hover:bg-muted/50" onClick={() => onViewDetails(transaction)}>
             <TableCell className="font-medium">{transaction.id}</TableCell>
-            <TableCell>{transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2')}</TableCell>
+            <TableCell>{transaction.studentId ? transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2') : '—'}</TableCell>
             <TableCell>{transaction.studentReference}</TableCell>
             <TableCell>{transaction.firstName}</TableCell>
             <TableCell>{transaction.lastName}</TableCell>

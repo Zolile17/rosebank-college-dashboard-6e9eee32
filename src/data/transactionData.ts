@@ -1,3 +1,4 @@
+
 import { ReconciliationTransaction, TransactionsTableTransaction } from "./types";
 import { generateRRN, generateMaskedCard } from "./utils";
 
@@ -17,6 +18,11 @@ const assignRandomFaculty = () => faculties[Math.floor(Math.random() * faculties
 // Helper function to hash student reference
 const hashStudentRef = (id: string): string => {
   return `SC${id.substring(0, 8)}`;
+};
+
+// Helper function to generate student ID
+const generateStudentId = (): string => {
+  return `${Math.floor(9000000000000 + Math.random() * 1000000000000)}`;
 };
 
 // Helper function to mask email
@@ -80,6 +86,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1002",
+    studentId: "9823456789012",
     studentReference: hashStudentRef("23456789"),
     firstName: "Sa***",
     lastName: "Jo***",
@@ -96,6 +103,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1003",
+    studentId: "9834567890123",
     studentReference: hashStudentRef("34567890"),
     firstName: "Th***",
     lastName: "Wr***",
@@ -262,6 +270,7 @@ const convertToTableTransactions = (data: ReconciliationTransaction[]): Transact
     const customerName = getCustomerName(t.firstName, t.lastName);
     return {
       ...t,
+      studentId: t.studentId || generateStudentId(), // Ensure studentId is always present
       payerLastName: "", // remain for old consumers
       paymentType: t.paymentType || "",
       date: t.timestamp,

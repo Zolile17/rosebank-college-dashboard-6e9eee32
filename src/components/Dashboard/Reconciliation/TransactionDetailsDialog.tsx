@@ -1,3 +1,4 @@
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Transaction } from "./types";
@@ -46,7 +47,10 @@ export function TransactionDetailsDialog({
         </DialogHeader>
 
         <div className="space-y-1">
-          <DetailsRow label="Student ID" value={transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2')} />
+          <DetailsRow 
+            label="Student ID" 
+            value={transaction.studentId ? transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2') : '—'} 
+          />
           <DetailsRow label="Student Reference" value={transaction.studentReference} />
           <DetailsRow label="First Name" value={transaction.firstName} />
           <DetailsRow label="Last Name" value={transaction.lastName} />
