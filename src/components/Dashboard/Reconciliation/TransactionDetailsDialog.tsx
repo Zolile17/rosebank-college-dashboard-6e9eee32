@@ -1,4 +1,3 @@
-
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Transaction } from "./types";
@@ -45,6 +44,42 @@ export function TransactionDetailsDialog({
     return maskedEmail.replace(/(\w{2})\*+@/, "$1@");
   };
 
+  // Function to mask student ID - specifically for 12-digit IDs
+  const maskStudentId = (studentId: string): string => {
+    if (!studentId) return '—';
+    
+    // For 12-digit student IDs (common in the data)
+    if (studentId.length === 12) {
+      return studentId.replace(/(\d{4})(\d{4})(\d{4})/, '$1****$3');
+    }
+    
+    // For IDs of other lengths, use a more general approach
+    if (studentId.length > 8) {
+      const firstFour = studentId.substring(0, 4);
+      const lastFour = studentId.substring(studentId.length - 4);
+      const middleLength = studentId.length - 8;
+      const maskedMiddle = '*'.repeat(middleLength);
+      return `${firstFour}${maskedMiddle}${lastFour}`;
+    }
+    
+    // For shorter IDs (less than 8 digits)
+    if (studentId.length > 3) {
+      const firstTwo = studentId.substring(0, 2);
+      const lastTwo = studentId.substring(studentId.length - 2);
+      const middleLength = studentId.length - 4;
+      const maskedMiddle = '*'.repeat(middleLength);
+      return `${firstTwo}${maskedMiddle}${lastTwo}`;
+    }
+    
+    // For very short IDs, just mask the middle character if possible
+    if (studentId.length === 3) {
+      return `${studentId[0]}*${studentId[2]}`;
+    }
+    
+    // For extremely short IDs (1-2 chars), don't mask
+    return studentId;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
@@ -61,7 +96,7 @@ export function TransactionDetailsDialog({
         <div className="space-y-1">
           <DetailsRow 
             label="Student ID" 
-            value={transaction.studentId ? transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2') : '—'} 
+            value={maskStudentId(transaction.studentId)} 
           />
           <DetailsRow label="Student Reference" value={transaction.studentReference} />
           <DetailsRow label="First Name" value={unmaskName(transaction.firstName)} />
