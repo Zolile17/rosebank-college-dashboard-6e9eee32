@@ -67,7 +67,7 @@ export const transactionsData: ReconciliationTransaction[] = [
     studentId: "9812345678901",
     studentReference: hashStudentRef("12345678"),
     firstName: "Emily",
-    lastName: "Parker",
+    lastName: "Peter",
     email: "emily.parker@example.com",
     timestamp: "Apr 7, 2025, 09:15 AM",
     amount: 16500,
