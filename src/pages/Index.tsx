@@ -23,6 +23,7 @@ import {
   getActivitiesByStore
 } from "@/data/dashboardData";
 import { Transaction } from "@/components/Dashboard/TransactionsTable";
+import { ActivityItem } from "@/data/types";
 
 // Mock data for store comparison
 const storeComparisonData = [
@@ -44,7 +45,7 @@ const DashboardContent = ({ selectedStore }: DashboardContentProps) => {
   const [storeMetrics, setStoreMetrics] = useState(getStoreData(selectedStore));
   const [revenueData, setRevenueData] = useState(getRevenueData(selectedStore));
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
-  const [filteredActivities, setFilteredActivities] = useState(getActivitiesByStore(selectedStore));
+  const [filteredActivities, setFilteredActivities] = useState<ActivityItem[]>([]);
 
   useEffect(() => {
     setStoreMetrics(getStoreData(selectedStore));
@@ -62,7 +63,7 @@ const DashboardContent = ({ selectedStore }: DashboardContentProps) => {
     }));
     
     setFilteredTransactions(transactions);
-    setFilteredActivities(getActivitiesByStore(selectedStore));
+    setFilteredActivities(getActivitiesByStore(selectedStore) as ActivityItem[]);
   }, [selectedStore]);
 
   const formatCurrency = (value: number) => {

@@ -16,13 +16,23 @@ export interface RevenueDataPoint {
   revenue: number;
 }
 
-// Define ActivityItem type that was missing
+// Define ActivityItem type
 export interface ActivityItem {
   id: string;
   timestamp: string;
   description: string;
   title?: string;
   type?: string;
+}
+
+// Export activity type with campus location
+export interface CampusActivity extends ActivityItem {
+  campusLocation?: string;
+}
+
+// Add StoreActivity type
+export interface StoreActivity extends ActivityItem {
+  storeLocation?: string;
 }
 
 // Updated: Added studentId and iieFaculty fields
@@ -64,9 +74,3 @@ export interface TransactionsTableTransaction {
   storeLocation: string;
   iieFaculty?: string;
 }
-
-// Export activity type with campus location
-export type CampusActivity = ActivityItem & { campusLocation?: string };
-
-// Add StoreActivity type
-export type StoreActivity = ActivityItem & { storeLocation?: string };
