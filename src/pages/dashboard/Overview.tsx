@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { FilterIcon, CircleDollarSignIcon, BarChart3Icon, UsersIcon, FileDownIcon, Banknote } from "lucide-react";
 import { useState, useEffect } from "react";
 import { isWithinInterval, parseISO } from "date-fns";
-import { getStoreData, getRevenueData, getTransactionsByStore, storeLocations } from "@/data/dashboardData";
+import { getStoreData, getRevenueData, getTransactionsByStore } from "@/data/dashboardData";
+import { campusLocations } from "@/data/storeData";
 import { DateRange } from "react-day-picker";
 import { ExportReportDialog } from "@/components/Dashboard/ExportReportDialog";
 

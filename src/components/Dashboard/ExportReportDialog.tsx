@@ -33,11 +33,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns";
 import { CalendarIcon, DownloadIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getRevenueData } from "@/data/dashboardData";
+import { getRevenueData } from "@/data/storeData";
 import { getProductMetrics } from "@/data/productData";
 import { Transaction } from "@/components/Dashboard/TransactionsTable";
 import { pdf } from "@react-pdf/renderer";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { campusLocations } from "@/data/storeData";
 
 const styles = StyleSheet.create({
   page: {

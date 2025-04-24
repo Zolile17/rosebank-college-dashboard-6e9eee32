@@ -42,7 +42,7 @@ import {
   type Product,
   type Category
 } from "@/data/productData";
-import { storeLocations } from "@/data/dashboardData";
+import { campusLocations } from "@/data/storeData";
 
 interface Store {
   id: string;
@@ -127,7 +127,7 @@ export default function StorePerformancePage() {
               <SelectValue placeholder="Select a store" />
             </SelectTrigger>
             <SelectContent>
-              {storeLocations.map((store) => (
+              {campusLocations.map((store) => (
                 <SelectItem key={store} value={store}>
                   {store}
                 </SelectItem>
@@ -308,4 +308,4 @@ function formatCurrency(value: number): string {
     style: 'currency',
     currency: 'ZAR',
   }).format(value);
-} 
+}

@@ -66,6 +66,7 @@ const getCustomerName = (firstName: string, lastName: string): string => {
 
 // Sample student data with updated fields for campus payments
 // Add iieFaculty for each transaction (random assignment)
+// Make sure all transactions have studentId
 export const transactionsData: ReconciliationTransaction[] = [
   {
     id: "T1001",
@@ -120,6 +121,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1004",
+    studentId: "9845678901234",
     studentReference: hashStudentRef("45678901"),
     firstName: "Da***",
     lastName: "Ch***",
@@ -136,6 +138,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1005",
+    studentId: "9856789012345",
     studentReference: hashStudentRef("56789012"),
     firstName: "Ju***",
     lastName: "Ro***",
@@ -152,6 +155,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1006",
+    studentId: "9867890123456",
     studentReference: hashStudentRef("67890123"),
     firstName: "Al***",
     lastName: "Sm***",
@@ -168,6 +172,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1007",
+    studentId: "9878901234567",
     studentReference: hashStudentRef("78901234"),
     firstName: "Mi***",
     lastName: "Br***",
@@ -184,6 +189,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1008",
+    studentId: "9889012345678",
     studentReference: hashStudentRef("89012345"),
     firstName: "So***",
     lastName: "Ga***",
@@ -200,6 +206,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1009",
+    studentId: "9890123456789",
     studentReference: hashStudentRef("90123456"),
     firstName: "Na***",
     lastName: "Ca***",
@@ -216,6 +223,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1010",
+    studentId: "9801234567890",
     studentReference: hashStudentRef("01234567"),
     firstName: "Ja***",
     lastName: "Wi***",
@@ -232,6 +240,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1011",
+    studentId: "9812345670123",
     studentReference: hashStudentRef("12345670"),
     firstName: "Ol***",
     lastName: "Ch***",
@@ -248,6 +257,7 @@ export const transactionsData: ReconciliationTransaction[] = [
   },
   {
     id: "T1012",
+    studentId: "9823456701234",
     studentReference: hashStudentRef("23456701"),
     firstName: "Em***",
     lastName: "Wa***",

@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { LvLogo } from "./LvLogo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -28,7 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { storeLocations } from "@/data/dashboardData";
+import { campusLocations } from "@/data/storeData";
 import { useNavigate } from "react-router-dom";
 
 interface DashboardHeaderProps {
@@ -122,7 +121,7 @@ export function DashboardHeader({
               <SelectValue placeholder="Select a campus" />
             </SelectTrigger>
             <SelectContent>
-              {storeLocations.map((campus) => (
+              {campusLocations.map((campus) => (
                 <SelectItem key={campus} value={campus}>
                   {campus}
                 </SelectItem>

@@ -1,3 +1,4 @@
+
 import { transactionsData } from "./transactionData";
 import {
   CampusData,
@@ -5,7 +6,15 @@ import {
   CampusActivity,
   StoreActivity,
   TransactionsTableTransaction,
+  ActivityItem
 } from "./types";
+import { campusLocations } from "./storeData";
+
+// Export storeLocations for use in other components
+export { campusLocations } from "./storeData";
+
+// Export transactions data for report generation
+export { transactionsData } from "./transactionData";
 
 // Mock data for campus performance
 const campusData: { [key: string]: CampusData } = {
@@ -234,6 +243,9 @@ const activities: (CampusActivity | StoreActivity)[] = [
     storeLocation: "Polokwane",
   },
 ];
+
+// Export activities data for reports
+export const activitiesData = activities;
 
 // Function to get store data by campus
 export const getStoreData = (store: string): CampusData => {

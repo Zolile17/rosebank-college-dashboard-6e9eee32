@@ -1,4 +1,3 @@
-
 import { CampusData, RevenueDataPoint } from "./types";
 
 // Campus names/locations
@@ -9,7 +8,6 @@ export const campusLocations = [
   "Durban",
   "Polokwane",
   "Cape Town",
- 
 ];
 
 // Mock data for different campuses

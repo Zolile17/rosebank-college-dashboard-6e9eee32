@@ -51,7 +51,7 @@ export function TransactionTable({
             <TableCell>{transaction.campus}</TableCell>
             <TableCell>{transaction.iieFaculty || "—"}</TableCell>
             <TableCell>{formatCurrency(transaction.amount)}</TableCell>
-            <TableCell>{transaction.rrn}</TableCell>
+            <TableCell>{transaction.rrn || "—"}</TableCell>
             <TableCell>{transaction.timestamp}</TableCell>
             <TableCell>
               <TransactionStatusBadge status={transaction.status} />

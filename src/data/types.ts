@@ -16,6 +16,15 @@ export interface RevenueDataPoint {
   revenue: number;
 }
 
+// Define ActivityItem type that was missing
+export interface ActivityItem {
+  id: string;
+  timestamp: string;
+  description: string;
+  title?: string;
+  type?: string;
+}
+
 // Updated: Added studentId and iieFaculty fields
 export interface ReconciliationTransaction {
   id: string;
