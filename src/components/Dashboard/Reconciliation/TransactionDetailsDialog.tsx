@@ -1,4 +1,3 @@
-
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Transaction } from "./types";
@@ -47,20 +46,19 @@ export function TransactionDetailsDialog({
         </DialogHeader>
 
         <div className="space-y-1">
+          <DetailsRow label="Student ID" value={transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2')} />
           <DetailsRow label="Student Reference" value={transaction.studentReference} />
           <DetailsRow label="First Name" value={transaction.firstName} />
           <DetailsRow label="Last Name" value={transaction.lastName} />
           <DetailsRow label="Email" value={transaction.email} />
           <DetailsRow label="Campus" value={transaction.campus} />
-          <DetailsRow label="Payer First Name" value={transaction.payerFirstName} />
-          <DetailsRow label="Payer Last Name" value={transaction.payerLastName} />
-          <DetailsRow label="Payment Type" value={transaction.paymentType} />
+          <DetailsRow label="IIE Faculty" value={transaction.iieFaculty || "—"} />
           <DetailsRow label="Amount" value={formatCurrency(transaction.amount)} />
           <DetailsRow label="Timestamp" value={transaction.timestamp} />
           {transaction.rrn && (
             <DetailsRow label="RRN" value={transaction.rrn} />
           )}
-          {transaction.cardNumber && transaction.paymentType === "Card" && (
+          {transaction.cardNumber && (
             <DetailsRow label="Card Number" value={transaction.cardNumber} />
           )}
         </div>

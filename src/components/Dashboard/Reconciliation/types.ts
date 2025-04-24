@@ -1,13 +1,12 @@
-
 export interface Transaction {
   id: string;
+  studentId: string;
   studentReference: string;
   firstName: string;
   lastName: string;
   email: string;
   campus: string;
   payerFirstName: string;
-  paymentType: string;
   amount: number;
   timestamp: string;
   status: string;

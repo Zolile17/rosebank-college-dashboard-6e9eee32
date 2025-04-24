@@ -1,4 +1,3 @@
-
 import { ReconciliationTransaction, TransactionsTableTransaction } from "./types";
 import { generateRRN, generateMaskedCard } from "./utils";
 
@@ -64,6 +63,7 @@ const getCustomerName = (firstName: string, lastName: string): string => {
 export const transactionsData: ReconciliationTransaction[] = [
   {
     id: "T1001",
+    studentId: "9812345678901",
     studentReference: hashStudentRef("12345678"),
     firstName: "Em***",
     lastName: "Pa***",
