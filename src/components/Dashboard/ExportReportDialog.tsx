@@ -394,6 +394,8 @@ export function ExportReportDialog({ trigger, selectedStore }: ExportReportDialo
 
   const renderPDFPreview = () => {
     const storeData = getStoreData(selectedStore);
+    const revenueValue = Array.isArray(storeData.revenue) ? 
+      storeData.revenue[storeData.revenue.length - 1] : storeData.revenue;
     
     let PDFComponent;
 
@@ -402,7 +404,7 @@ export function ExportReportDialog({ trigger, selectedStore }: ExportReportDialo
         PDFComponent = (
           <SalesReportPDF
             data={{
-              totalSales: storeData.revenue[storeData.revenue.length - 1],
+              totalSales: revenueValue,
               salesCount: storeData.salesCount,
               averageOrder: storeData.averageOrder,
               newCustomers: storeData.newCustomers

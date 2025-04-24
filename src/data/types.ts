@@ -1,6 +1,7 @@
+
 // Export campus data type
 export interface CampusData {
-  revenue: number;
+  revenue: number | number[];
   paymentsCount: number;
   averagePayment: number;
   transactionsCount: number;

@@ -74,6 +74,13 @@ const DashboardContent = ({ selectedStore }: DashboardContentProps) => {
     }).format(value);
   };
 
+  const getRevenueValue = () => {
+    if (Array.isArray(storeMetrics.revenue)) {
+      return storeMetrics.revenue[storeMetrics.revenue.length - 1];
+    }
+    return storeMetrics.revenue;
+  };
+
   return (
     <div className="animate-fade-in">
       <div className="mb-8 flex justify-between items-center">
@@ -99,7 +106,7 @@ const DashboardContent = ({ selectedStore }: DashboardContentProps) => {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <MetricCard
           title="Total Sales"
-          value={formatCurrency(storeMetrics.revenue[storeMetrics.revenue.length - 1])}
+          value={formatCurrency(getRevenueValue())}
           icon={<CircleDollarSignIcon className="h-4 w-4" />}
           change={12}
           changeText="from yesterday"
