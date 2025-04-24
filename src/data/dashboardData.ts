@@ -1,4 +1,3 @@
-
 import { transactionsData } from "./transactionData";
 import {
   CampusData,
@@ -180,7 +179,7 @@ const revenueData: { [key: string]: RevenueDataPoint[] } = {
   ],
 };
 
-// Mock data for activities
+// Mock data for activities - all have required title field
 const activities: (CampusActivity | StoreActivity)[] = [
   {
     id: "A1001",
@@ -270,7 +269,7 @@ export const getRevenueData = (store: string): RevenueDataPoint[] => {
 // Function to get activities by store
 export const getActivitiesByStore = (
   store: string
-): (CampusActivity | StoreActivity)[] => {
+): ActivityItem[] => {
   if (store === "All Stores") {
     return activities;
   }

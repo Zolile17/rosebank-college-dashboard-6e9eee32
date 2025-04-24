@@ -21,7 +21,7 @@ export interface ActivityItem {
   id: string;
   timestamp: string;
   description: string;
-  title?: string;
+  title: string; // Changed from optional to required
   type?: string;
 }
 

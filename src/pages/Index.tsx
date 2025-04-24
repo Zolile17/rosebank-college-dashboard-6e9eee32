@@ -63,7 +63,7 @@ const DashboardContent = ({ selectedStore }: DashboardContentProps) => {
     }));
     
     setFilteredTransactions(transactions);
-    setFilteredActivities(getActivitiesByStore(selectedStore) as ActivityItem[]);
+    setFilteredActivities(getActivitiesByStore(selectedStore));
   }, [selectedStore]);
 
   const formatCurrency = (value: number) => {

@@ -1,14 +1,8 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { CircleIcon } from "lucide-react";
-
-export interface ActivityItem {
-  id: string;
-  title: string;
-  description: string;
-  timestamp: string;
-  type: "sale" | "refund" | "restock" | "campaign" | "alert" | "staff";
-}
+import { ActivityItem } from "@/data/types";
 
 interface ActivityFeedProps {
   activities: ActivityItem[];
@@ -16,7 +10,7 @@ interface ActivityFeedProps {
 }
 
 export function ActivityFeed({ activities, className }: ActivityFeedProps) {
-  const getActivityTypeColor = (type: string) => {
+  const getActivityTypeColor = (type?: string) => {
     switch (type) {
       case "sale":
         return "text-emerald-500 fill-emerald-500";
