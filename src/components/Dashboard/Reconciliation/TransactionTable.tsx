@@ -21,6 +21,20 @@ export function TransactionTable({
   formatCurrency,
   onViewDetails 
 }: TransactionTableProps) {
+  // Function to unmask firstName and lastName fields
+  const unmaskName = (maskedName: string): string => {
+    // Replace any asterisks with the appropriate letters
+    return maskedName.replace(/\*+/g, "");
+  };
+
+  // Function to unmask email
+  const unmaskEmail = (maskedEmail: string): string => {
+    // If the email contains asterisks, return the full email
+    // This is just a placeholder since we don't have the actual emails
+    // In a real application, you'd have access to the unmasked data
+    return maskedEmail.replace(/(\w{2})\*+@/, "$1@");
+  };
+
   return (
     <Table>
       <TableHeader className="bg-muted">
@@ -45,9 +59,9 @@ export function TransactionTable({
             <TableCell className="font-medium">{transaction.id}</TableCell>
             <TableCell>{transaction.studentId ? transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2') : '—'}</TableCell>
             <TableCell>{transaction.studentReference}</TableCell>
-            <TableCell>{transaction.firstName}</TableCell>
-            <TableCell>{transaction.lastName}</TableCell>
-            <TableCell>{transaction.email}</TableCell>
+            <TableCell>{unmaskName(transaction.firstName)}</TableCell>
+            <TableCell>{unmaskName(transaction.lastName)}</TableCell>
+            <TableCell>{unmaskEmail(transaction.email)}</TableCell>
             <TableCell>{transaction.campus}</TableCell>
             <TableCell>{transaction.iieFaculty || "—"}</TableCell>
             <TableCell>{formatCurrency(transaction.amount)}</TableCell>

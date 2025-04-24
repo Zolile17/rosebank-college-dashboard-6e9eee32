@@ -24,17 +24,23 @@ export default function OverviewPage() {
 
   useEffect(() => {
     setCampusMetrics(getStoreData(selectedCampus));
-    setRevenueData(getRevenueData(selectedCampus));
+    
+    // Make sure we have the updated revenue data
+    const updatedRevenueData = getRevenueData(selectedCampus);
+    setRevenueData(updatedRevenueData);
+    
     setFilteredTransactions(getTransactionsByStore(selectedCampus));
   }, [selectedCampus]);
 
+  // Filter revenue data based on date range
   const filteredRevenueData = revenueData.filter((item) => {
-    const itemDate = parseISO(item.date);
-    return dateRange.from && dateRange.to 
-      ? isWithinInterval(itemDate, { start: dateRange.from, end: dateRange.to })
-      : true;
+    if (!dateRange.from || !dateRange.to) return true;
+    
+    const itemDate = new Date(item.date);
+    return isWithinInterval(itemDate, { start: dateRange.from, end: dateRange.to });
   });
 
+  // Calculate metrics based on filtered data
   const totalRevenue = filteredRevenueData.reduce((sum, item) => sum + item.revenue, 0);
   const totalPayments = campusMetrics.paymentsCount;
   const averagePayment = campusMetrics.averagePayment;

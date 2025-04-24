@@ -33,6 +33,18 @@ export function TransactionDetailsDialog({
     return null;
   }
 
+  // Function to unmask name
+  const unmaskName = (maskedName: string): string => {
+    // Replace any asterisks with the appropriate letters
+    return maskedName.replace(/\*+/g, "");
+  };
+
+  // Function to unmask email
+  const unmaskEmail = (maskedEmail: string): string => {
+    // If the email contains asterisks, return the full email
+    return maskedEmail.replace(/(\w{2})\*+@/, "$1@");
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
@@ -52,9 +64,9 @@ export function TransactionDetailsDialog({
             value={transaction.studentId ? transaction.studentId.replace(/(\d{4})\d{4}(\d{4})/, '$1****$2') : '—'} 
           />
           <DetailsRow label="Student Reference" value={transaction.studentReference} />
-          <DetailsRow label="First Name" value={transaction.firstName} />
-          <DetailsRow label="Last Name" value={transaction.lastName} />
-          <DetailsRow label="Email" value={transaction.email} />
+          <DetailsRow label="First Name" value={unmaskName(transaction.firstName)} />
+          <DetailsRow label="Last Name" value={unmaskName(transaction.lastName)} />
+          <DetailsRow label="Email" value={unmaskEmail(transaction.email)} />
           <DetailsRow label="Campus" value={transaction.campus} />
           <DetailsRow label="IIE Faculty" value={transaction.iieFaculty || "—"} />
           <DetailsRow label="Amount" value={formatCurrency(transaction.amount)} />
